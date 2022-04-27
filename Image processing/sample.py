@@ -30,20 +30,22 @@ def main():
     # get the cluster positions
     # sort them from max to min 'x' position w.r.t. the 'wx200/base_link' frame
     success, clusters = pcl.get_cluster_positions(ref_frame="vx300s/base_link", sort_axis="x", reverse=True)
-    
     i=0
+    print(i)
     # pick up all the objects and drop them in a virtual basket in front of the robot
     for cluster in clusters:
-        # bot.arm.set_ee_pose_components(x=0.3, z=0.2,pitch=1.5)
         x, y, z = cluster["position"]
-        bot.arm.set_ee_pose_components(x=x, y=y, z=z+0.05, pitch=1.5)
-        # bot.arm.set_ee_pose_components(x=x, y=y, z=z, pitch=1.5)
+        bot.arm.set_ee_pose_components(x=x, y=y, z=z+0.06, pitch=1.5)
+        # bot.arm.set_ee_pose_components(x=x, y=y, z=z, pitch=0.5)
         bot.gripper.close()
-        bot.arm.set_ee_pose_components(x=0.3, z=0.2,pitch=1.5)
+        bot.arm.set_ee_pose_components(x=0.3, z=0.2, pitch=1.5)
+        # bot.arm.set_ee_pose_components(x=x, y=y, z=z+0.05, pitch=1.5)
         bot.arm.set_ee_pose_components(x=0.35, y=-0.24, z=0.05+i, pitch=1.5)
         bot.gripper.open()
         bot.arm.set_ee_pose_components(x=0.35, y=-0.24, z=0.2, pitch=1.5)
+        bot.arm.set_ee_pose_components(x=0.3, z=0.2)
         i=i+0.03
+        print(i)
     bot.arm.go_to_sleep_pose()
 
 if __name__=='__main__':
